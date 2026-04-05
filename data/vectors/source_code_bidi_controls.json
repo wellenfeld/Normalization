@@ -1,0 +1,40 @@
+{
+  "id": "source-code-bidi-controls-minimal",
+  "description": "Minimal vector illustrating how bidi control characters can affect visual order without changing logical code point order. Intended for tooling diagnostics, not for normalization-form equivalence.",
+  "references": {
+    "uts55": "https://www.unicode.org/reports/tr55/",
+    "trojan_source": "https://trojansource.codes/",
+    "uax31": "https://unicode.org/reports/tr31/"
+  },
+  "example": {
+    "note": "This vector does not attempt to reproduce a complete Trojan Source attack; it captures the presence of bidi controls as a detectable condition.",
+    "string": "abc\u202Edef\u202Cghi",
+    "code_points": [
+      "U+0061",
+      "U+0062",
+      "U+0063",
+      "U+202E",
+      "U+0064",
+      "U+0065",
+      "U+0066",
+      "U+202C",
+      "U+0067",
+      "U+0068",
+      "U+0069"
+    ],
+    "bidi_controls": [
+      {
+        "code_point": "U+202E",
+        "name": "RIGHT-TO-LEFT OVERRIDE"
+      },
+      {
+        "code_point": "U+202C",
+        "name": "POP DIRECTIONAL FORMATTING"
+      }
+    ]
+  },
+  "assertions": {
+    "contains_bidi_control_characters": true,
+    "normalization_forms_apply": "Normalization (UAX #15) does not remove bidi controls by definition; mitigation is typically by restricting/diagnosing these characters per UTS #55/UAX #31 profiles."
+  }
+}

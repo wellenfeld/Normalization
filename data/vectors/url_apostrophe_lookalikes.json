@@ -1,0 +1,35 @@
+{
+  "id": "url-apostrophe-lookalikes",
+  "description": "Apostrophe-like code points are distinct in Unicode and have distinct UTF-8 bytes; percent-encoding exposes these differences.",
+  "references": {
+    "uax15": "https://unicode.org/reports/tr15/",
+    "rfc3986": "https://www.rfc-editor.org/rfc/rfc3986.html",
+    "whatwg_url": "https://url.spec.whatwg.org/"
+  },
+  "characters": [
+    {
+      "name": "APOSTROPHE",
+      "code_points": ["U+0027"],
+      "utf8_bytes_hex": "27",
+      "percent_encoded": "%27"
+    },
+    {
+      "name": "RIGHT SINGLE QUOTATION MARK",
+      "code_points": ["U+2019"],
+      "utf8_bytes_hex": "E2 80 99",
+      "percent_encoded": "%E2%80%99"
+    },
+    {
+      "name": "MODIFIER LETTER RIGHT HALF RING",
+      "code_points": ["U+02BE"],
+      "utf8_bytes_hex": "CA BE",
+      "percent_encoded": "%CA%BE"
+    }
+  ],
+  "assertions": {
+    "all_code_point_sequences_distinct": true,
+    "all_utf8_byte_sequences_distinct": true,
+    "all_percent_encodings_distinct": true,
+    "note": "This vector does not claim any normalization equivalence/inequivalence between these characters; treat that as a separate test if needed."
+  }
+}

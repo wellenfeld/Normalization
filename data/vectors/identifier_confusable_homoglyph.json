@@ -1,0 +1,42 @@
+{
+  "id": "identifier-confusable-homoglyph-minimal",
+  "description": "Minimal vector illustrating mixed-script lookalike identifiers (homoglyph-style risk).",
+  "references": {
+    "uts39": "https://unicode.org/reports/tr39/",
+    "uax31": "https://unicode.org/reports/tr31/",
+    "trojan_source": "https://trojansource.codes/"
+  },
+  "examples": [
+    {
+      "label": "Latin vs Cyrillic lookalike letter in identifier",
+      "identifier_a": "sayHello",
+      "identifier_b": "say\u041Hello",
+      "note": "identifier_b uses U+041D CYRILLIC CAPITAL LETTER EN (looks similar to Latin 'H' in many fonts).",
+      "code_points_a": [
+        "U+0073",
+        "U+0061",
+        "U+0079",
+        "U+0048",
+        "U+0065",
+        "U+006C",
+        "U+006C",
+        "U+006F"
+      ],
+      "code_points_b": [
+        "U+0073",
+        "U+0061",
+        "U+0079",
+        "U+041D",
+        "U+0065",
+        "U+006C",
+        "U+006C",
+        "U+006F"
+      ],
+      "assertions": {
+        "binary_identical": false,
+        "visually_potentially_confusable": true,
+        "normalization_equivalence_claimed": false
+      }
+    }
+  ]
+}

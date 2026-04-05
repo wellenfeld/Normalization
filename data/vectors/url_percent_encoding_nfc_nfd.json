@@ -1,0 +1,81 @@
+{
+  "id": "url-percent-encoding-nfc-vs-nfd",
+  "description": "Canonically equivalent Unicode text yields different UTF-8 bytes and therefore different percent-encoded URL text.",
+  "references": {
+    "uax15": "https://unicode.org/reports/tr15/",
+    "rfc3986": "https://www.rfc-editor.org/rfc/rfc3986.html",
+    "whatwg_url": "https://url.spec.whatwg.org/"
+  },
+  "inputs": {
+    "unicode_string_nfc": "Convênio_de_Bahá'u'lláh",
+    "unicode_string_nfd": "Convênio_de_Bahá'u'lláh",
+    "code_points_nfc": [
+      "U+0043",
+      "U+006F",
+      "U+006E",
+      "U+0076",
+      "U+00EA",
+      "U+006E",
+      "U+0069",
+      "U+006F",
+      "U+005F",
+      "U+0064",
+      "U+0065",
+      "U+005F",
+      "U+0042",
+      "U+0061",
+      "U+0068",
+      "U+00E1",
+      "U+0027",
+      "U+0075",
+      "U+0027",
+      "U+006C",
+      "U+006C",
+      "U+00E1",
+      "U+0068"
+    ],
+    "code_points_nfd": [
+      "U+0043",
+      "U+006F",
+      "U+006E",
+      "U+0076",
+      "U+0065",
+      "U+0302",
+      "U+006E",
+      "U+0069",
+      "U+006F",
+      "U+005F",
+      "U+0064",
+      "U+0065",
+      "U+005F",
+      "U+0042",
+      "U+0061",
+      "U+0068",
+      "U+0061",
+      "U+0301",
+      "U+0027",
+      "U+0075",
+      "U+0027",
+      "U+006C",
+      "U+006C",
+      "U+0061",
+      "U+0301",
+      "U+0068"
+    ]
+  },
+  "expected": {
+    "utf8_bytes_for_e_circumflex_nfc": "C3 AA",
+    "utf8_bytes_for_e_circumflex_nfd": "65 CC 82",
+    "utf8_bytes_for_a_acute_nfc": "C3 A1",
+    "utf8_bytes_for_a_acute_nfd": "61 CC 81",
+    "percent_encoded_e_circumflex_nfc": "%C3%AA",
+    "percent_encoded_e_circumflex_nfd": "%65%CC%82",
+    "percent_encoded_a_acute_nfc": "%C3%A1",
+    "percent_encoded_a_acute_nfd": "%61%CC%81"
+  },
+  "assertions": {
+    "canonically_equivalent": true,
+    "binary_identical": false,
+    "percent_encoded_identical": false
+  }
+}
