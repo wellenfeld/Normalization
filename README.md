@@ -36,6 +36,7 @@ This repository provides **comprehensive research** on Unicode normalization and
 - **[Linter/Parser Normalization Issues](docs/linter-parser-normalization-issues.md)** — linter/parser failure modes with Unicode
 - **[URL Percent Encoding and Normalization](docs/url-percent-encoding-and-normalization.md)** — how NFC vs NFD changes percent-encoded URLs
 - **[Source Code Bidi and Invisible Characters](docs/source-code-bidi-and-invisible-characters.md)** — bidi controls and source code attacks
+- **[Multi-Language Normalization Analysis](docs/multi-language-normalization-analysis.md)** — cross-language consistency and security testing
 
 ## 🧪 Test Vectors
 
