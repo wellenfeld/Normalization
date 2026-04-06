@@ -1,0 +1,38 @@
+{
+  "id": "normalization-composition-exclusions-minimal",
+  "description": "Minimal vectors illustrating the four types of composition exclusions defined in UAX #15 §5.1. These characters are excluded from canonical composition.",
+  "references": {
+    "uax15": "https://unicode.org/reports/tr15/"
+  },
+  "examples": [
+    {
+      "type": "script_specific_exclusion",
+      "code_point": "U+0958",
+      "name": "DEVANAGARI LETTER QA",
+      "note": "Script-specific exclusion for Devanagari; cannot be computed from decomposition mappings alone."
+    },
+    {
+      "type": "post_composition_version_exclusion",
+      "code_point": "U+2ADC",
+      "name": "FORKING",
+      "note": "Added after composition version; excluded to maintain normalization stability."
+    },
+    {
+      "type": "singleton_exclusion",
+      "code_point": "U+2126",
+      "name": "OHM SIGN",
+      "note": "Singleton decomposition to different single character; automatically excluded from composition."
+    },
+    {
+      "type": "non_starter_decomposition_exclusion",
+      "code_point": "U+0344",
+      "name": "COMBINING GREEK DIALYTIKA TONOS",
+      "note": "Non-starter decomposition; automatically excluded from composition."
+    }
+  ],
+  "assertions": {
+    "composition_exclusions_are_explicit": true,
+    "cannot_be_computed_from_decomposition_alone": true,
+    "stability_preserving": true
+  }
+}

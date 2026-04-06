@@ -1,0 +1,28 @@
+{
+  "id": "normalization-stream-safe-minimal",
+  "description": "Minimal vector illustrating Stream-Safe Text Format per UAX #15 §3.12. Overlong sequences of non-starters break stream-safe guarantees.",
+  "references": {
+    "uax15": "https://unicode.org/reports/tr15/"
+  },
+  "examples": [
+    {
+      "label": "Stream-safe string",
+      "string": "e\u0301",
+      "code_points": ["U+0065", "U+0301"],
+      "note": "e + COMBINING ACUTE ACCENT; stream-safe because there is no overlong non-starter sequence.",
+      "is_stream_safe": true
+    },
+    {
+      "label": "Overlong non-starter sequence (not stream-safe)",
+      "string": "a\u0301\u0301",
+      "code_points": ["U+0061", "U+0301", "U+0301"],
+      "note": "a + COMBINING ACUTE ACCENT + COMBINING ACUTE ACCENT; overlong sequence of non-starters.",
+      "is_stream_safe": false
+    }
+  ],
+  "assertions": {
+    "stream_safe_requires_no_overlong_non_starter_sequence": true,
+    "stream_safe_allows_combining_marks": true,
+    "stream_safe_allows_non_starters_as_long_as_not_overlong": true
+  }
+}

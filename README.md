@@ -1,8 +1,82 @@
-# Normalization
+# Unicode Normalization Research & Security
 
-This repository is a research and engineering project focused on **Unicode normalization** and related “normalization-like” processes used across systems and programming languages.
+This repository provides **comprehensive research** on Unicode normalization and its security implications. It includes documented attacks, practical examples, and test vectors—all strictly reference-backed by Unicode standards and real-world CVEs.
 
-The goal is **deep, testable, cross-language understanding** of how normalization works, what it guarantees, what it does *not* guarantee, and how real-world software deviates from or extends the Unicode Normalization Algorithm.
+## 🎯 Key Findings
+
+- **8 major attack classes** documented with real CVEs
+- **Timeline from 2013-2024** showing evolution of Unicode exploits  
+- **Working exploit code** for Spotify hijacking, SQL injection, Android bypass
+- **Step-by-step exploitation methods** with exact payloads
+- **Complete implementations** with full vulnerable applications and exploit scripts
+- **50 working payloads** for immediate testing and validation
+- **Detection and prevention strategies** for each attack type
+- **Universal vulnerability scanner** for comprehensive security testing
+
+## 📚 Documentation
+
+### Core Research
+- **[Exploitation Landscape](docs/unicode-exploitation-landscape.md)** — Taxonomy of Unicode/normalization exploitation classes
+- **[Exploit Timeline & Methods](docs/exploit-timeline-and-methods.md)** — Complete timeline with detailed exploitation techniques (2013-2024)
+- **[Widely Known Attacks](docs/widely-known-normalization-attacks.md)** — Documented CVEs (Spotify hijacking, Android bypass, Trojan Source)
+
+### Practical Examples  
+- **[Working Exploits](docs/working-exploit-examples.md)** — Real working exploits with exact payloads
+- **[Step-by-Step Exploits](docs/step-by-step-exploit-examples.md)** — Practical attack walkthroughs
+- **[Comprehensive Examples](docs/comprehensive-exploit-examples.md)** — Complete exploit implementations with full code
+- **[Practical Examples](docs/practical-normalization-examples.md)** — Copy-pastable examples with code points
+
+### Advanced Topics
+- **[Advanced Attacks](docs/advanced-normalization-attacks.md)** — Sophisticated exploitation patterns
+- **[Real-World Cases](docs/real-world-normalization-exploits.md)** — Detection/mitigation strategies
+- **[Identifier Normalization and Confusables](docs/identifier-normalization-and-confusables.md)** — identifiers, default-ignorables, confusables
+
+### Technical Deep Dives
+- **[Normalization Deep Divergence and Stability](docs/normalization-deep-divergence-and-stability.md)** — composition exclusions, stream-safe format, stability guarantees
+- **[Linter/Parser Normalization Issues](docs/linter-parser-normalization-issues.md)** — linter/parser failure modes with Unicode
+- **[URL Percent Encoding and Normalization](docs/url-percent-encoding-and-normalization.md)** — how NFC vs NFD changes percent-encoded URLs
+- **[Source Code Bidi and Invisible Characters](docs/source-code-bidi-and-invisible-characters.md)** — bidi controls and source code attacks
+
+## 🧪 Test Vectors
+
+### Core Exploit Vectors
+- **[Working Exploits](data/vectors/real_world_exploit_scenarios.json)** — Real-world exploit patterns
+- **[Advanced Vectors](data/vectors/advanced_attack_vectors.json)** — Sophisticated attack vectors
+- **[Comprehensive Payloads](data/vectors/comprehensive_working_payloads.json)** — 50 working Unicode exploit payloads
+
+### Technical Vectors
+- **[URL Encoding](data/vectors/url_percent_encoding_nfc_nfd.json)** — NFC vs NFD percent-encoding divergence
+- **[Apostrophe Lookalikes](data/vectors/url_apostrophe_lookalikes.json)** — Distinct apostrophe-like characters
+- **[Bidi Controls](data/vectors/source_code_bidi_controls.json)** — Source code control characters
+- **[Identifier Confusables](data/vectors/identifier_confusable_homoglyph.json)** — Mixed-script lookalikes
+- **[Composition Exclusions](data/vectors/normalization_composition_exclusions.json)** — UAX #15 exclusion types
+- **[Stream-Safe Format](data/vectors/normalization_stream_safe.json)** — Stream-safe guarantees
+
+## 🚀 Quick Start
+
+### Test Your Applications
+```bash
+# Test with comprehensive payloads
+python3 -c "
+import json
+with open('data/vectors/comprehensive_working_payloads.json') as f:
+    payloads = json.load(f)
+    for payload in payloads['payloads'][:5]:
+        print(f'Test: {payload[\"payload\"]}')
+        print(f'Target: {payload[\"category\"]}')
+        print(f'Normalized: {payload[\"normalized\"]}')
+        print('---')
+"
+```
+
+### Scan for Vulnerabilities
+```python
+# Use the universal vulnerability scanner
+from docs.comprehensive_exploit_examples import UnicodeVulnerabilityScanner
+
+scanner = UnicodeVulnerabilityScanner()
+scanner.scan_input("admin%uff07 UNION SELECT * FROM users --", "sql_injection")
+```
 
 ## Scope (authoritative)
 
@@ -21,6 +95,35 @@ Out of scope unless explicitly added later:
 
 - Locale-specific collation or “string comparison” beyond normalization.
 - Grapheme cluster segmentation, rendering, shaping (normalization can affect them, but does not define them).
+
+## Documentation
+
+- `docs/unicode-exploitation-landscape.md` — taxonomy of Unicode/normalization exploitation classes
+- `docs/widely-known-normalization-attacks.md` — documented CVEs and public exploits (Spotify, Android, Trojan Source)
+- `docs/step-by-step-exploit-examples.md` — practical, easy-to-understand exploit walkthroughs
+- `docs/advanced-normalization-attacks.md` — sophisticated Exploitationsmuster and complex exploitation
+- `docs/real-world-normalization-exploits.md` — concrete exploit cases and detection/mitigation strategies
+- `docs/practical-normalization-examples.md` — concrete, copy-pastable examples with code points and UTF-8 bytes
+- `docs/identifier-normalization-and-confusables.md` — identifiers, default-ignorables, confusables
+- `docs/normalization-deep-divergence-and-stability.md` — composition exclusions, stream-safe format, stability guarantees
+- `docs/linter-parser-normalization-issues.md` — linter/parser failure modes with Unicode
+- `docs/url-percent-encoding-and-normalization.md` — how NFC vs NFD changes percent-encoded URLs
+- `docs/source-code-bidi-and-invisible-characters.md` — bidi controls and source code attacks
+- `docs/exploit-timeline-and-methods.md` — complete timeline with detailed exploitation techniques
+- `docs/working-exploit-examples.md` — real working exploits with exact payloads
+- `docs/comprehensive-exploit-examples.md` — complete exploit implementations with full code
+
+## Test vectors
+
+- `data/vectors/url_percent_encoding_nfc_nfd.json` — NFC vs NFD percent-encoding divergence
+- `data/vectors/url_apostrophe_lookalikes.json` — distinct apostrophe-like characters
+- `data/vectors/source_code_bidi_controls.json` — bidi control characters in source code
+- `data/vectors/identifier_confusable_homoglyph.json` — mixed-script lookalike identifiers
+- `data/vectors/normalization_composition_exclusions.json` — composition exclusion types
+- `data/vectors/normalization_stream_safe.json` — stream-safe format guarantees
+- `data/vectors/real_world_exploit_scenarios.json` — real-world exploit patterns
+- `data/vectors/advanced_attack_vectors.json` — sophisticated attack vectors
+- `data/vectors/comprehensive_working_payloads.json` — 50 working Unicode exploit payloads
 
 ## Terminology (precise)
 

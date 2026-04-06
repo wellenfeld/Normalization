@@ -1,0 +1,94 @@
+{
+  "id": "advanced-normalization-attack-vectors",
+  "description": "Complex attack vectors demonstrating sophisticated Unicode normalization exploitation patterns.",
+  "references": {
+    "uax15": "https://unicode.org/reports/tr15/",
+    "uax29": "https://unicode.org/reports/tr29/",
+    "cwe_94": "https://cwe.mitre.org/data/definitions/94.html",
+    "cwe_400": "https://cwe.mitre.org/data/definitions/400.html",
+    "cwe_347": "https://cwe.mitre.org/data/definitions/347.html",
+    "cwe_208": "https://cwe.mitre.org/data/definitions/208.html",
+    "cwe_436": "https://cwe.mitre.org/data/definitions/436.html"
+  },
+  "attack_vectors": [
+    {
+      "type": "nfkc_expansion_smuggling",
+      "description": "NFKC expansion for payload smuggling",
+      "example": {
+        "input": "｀｀｀${process.env.FLAG}｀｀｀",
+        "nfkc": "```${process.env.FLAG}```",
+        "attack_vector": "Fullwidth backticks expand to regular backticks after NFKC"
+      },
+      "detection": "Scan for characters with NFKC expansions",
+      "mitigation": "Normalize before filtering"
+    },
+    {
+      "type": "canonical_ordering_bypass",
+      "description": "Non-starter reordering for logic bypass",
+      "example": {
+        "input": "e\u0301\u0327",
+        "nfd": "e\u0327\u0301",
+        "attack_vector": "Combining marks reorder during normalization"
+      },
+      "detection": "Compare input order vs canonical order",
+      "mitigation": "Normalize before parsing"
+    },
+    {
+      "type": "stream_safe_dos",
+      "description": "Overlong sequences for DoS",
+      "example": {
+        "input": "a\\u0301\".repeat(10000)",
+        "attack_vector": "Requires unbounded buffering during normalization"
+      },
+      "detection": "Monitor memory usage during normalization",
+      "mitigation": "Reject non-stream-safe input"
+    },
+    {
+      "type": "multi_layer_encoding",
+      "description": "Normalization + encoding bypass",
+      "example": {
+        "input": "｀｀｀",
+        "nfkc": "```",
+        "utf8": [96, 96, 96],
+        "percent_encoded": "%60%60%60",
+        "attack_vector": "Multiple encoding layers bypass filters"
+      },
+      "detection": "Normalize at each decoding step",
+      "mitigation": "Normalize after each decode"
+    },
+    {
+      "type": "crypto_collision",
+      "description": "Normalization collisions in signatures",
+      "example": {
+        "document_a": "café",
+        "document_b": "cafe\u0301",
+        "attack_vector": "Same visual content, different signatures"
+      },
+      "detection": "Normalize before signing",
+      "mitigation": "Include normalization form in signature metadata"
+    },
+    {
+      "type": "timing_attack",
+      "description": "Side-channel via normalization differences",
+      "example": {
+        "fast_input": "é",
+        "slow_input": "e\u0301",
+        "attack_vector": "Different normalization timing reveals form"
+      },
+      "detection": "Use constant-time normalization",
+      "mitigation": "Normalize all input to same form first"
+    },
+    {
+      "type": "distributed_inconsistency",
+      "description": "Inconsistent normalization across services",
+      "example": {
+        "service_a": "NFC",
+        "service_b": "NFD",
+        "service_c": "NFKC",
+        "attack_vector": "Same identifier stored differently across services"
+      },
+      "detection": "Monitor normalization forms across services",
+      "mitigation": "Standardize normalization across all services"
+    }
+  ]
+}
